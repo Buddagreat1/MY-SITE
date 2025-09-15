@@ -1,8 +1,8 @@
-# ----- app.py ----- #
+# app.py
+import os
+import json
+import uuid
 from flask import Flask, render_template, request, jsonify
-import json, os, uuid, webbrowser, socket, subprocess, signal
-from threading import Timer
-from pyngrok import ngrok
 
 app = Flask(__name__)
 
@@ -92,7 +92,6 @@ def update_progression():
 
     progression = load_progression()
 
-    # Update only known fields
     for key in ["wins", "losses", "stages_cleared", "achievements"]:
         if key in data:
             progression[key] = data[key]
@@ -116,52 +115,8 @@ def reset_progression():
 def index():
     return render_template("index.html")
 
-# ---------- Port Management ----------
-def is_port_in_use(port):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        return s.connect_ex(("127.0.0.1", port)) == 0
-
-def kill_process_on_port(port):
-    try:
-        result = subprocess.check_output(
-            ["lsof", "-t", f"-i:{port}"], text=True
-        ).strip()
-        if result:
-            for pid in result.split("\n"):
-                os.kill(int(pid), signal.SIGKILL)
-            print(f"💀 Killed process(es) on port {port}")
-    except subprocess.CalledProcessError:
-        pass  # nothing running
-
-def find_free_port(start_port=5000):
-    port = start_port
-    while is_port_in_use(port):
-        port += 1
-    return port
-
-# ---------- Auto-open Browser ----------
-def open_browser(url):
-    webbrowser.open_new(url)
-
+# ---------- Run (Render-ready) ----------
 if __name__ == "__main__":
-    PORT = 5000
-
-    # Kill any process using 5000
-    if is_port_in_use(PORT):
-        kill_process_on_port(PORT)
-
-    # If still busy, find a free one
-    if is_port_in_use(PORT):
-        PORT = find_free_port(5000)
-
-    # Start ngrok tunnel
-    public_url = ngrok.connect(PORT, "http").public_url
-    skip_url = f"{public_url}?ngrok-skip-browser-warning=true"
-
-    print(f"\n🚀 Your site is live at:\n{public_url}\n(no-warning link: {skip_url})\n")
-
-    # Open browser to skip-warning link
-    Timer(1, open_browser, args=(skip_url,)).start()
-
-    # Run Flask
-    app.run(port=PORT, debug=False, use_reloader=False)
+    # Render (and many PaaS) provide PORT via environment variable
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
