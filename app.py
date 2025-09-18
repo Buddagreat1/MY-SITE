@@ -1,8 +1,5 @@
-# app.py
-import os
-import json
-import uuid
 from flask import Flask, render_template, request, jsonify
+import json, os, uuid
 
 app = Flask(__name__)
 
@@ -22,22 +19,16 @@ def save_json(file, data):
         json.dump(data, f, indent=2)
 
 # ---------- Heroes ----------
-def load_heroes():
-    return load_json(HEROES_FILE, [])
-
-def save_heroes(heroes):
-    save_json(HEROES_FILE, heroes)
-
 @app.route("/heroes")
 def heroes():
-    return jsonify(load_heroes())
+    return jsonify(load_json(HEROES_FILE, []))
 
 @app.route("/add", methods=["POST"])
 def add():
-    heroes = load_heroes()
+    heroes = load_json(HEROES_FILE, [])
     new_hero = {"id": str(uuid.uuid4()), "name": "", "level": "", "power": ""}
     heroes.append(new_hero)
-    save_heroes(heroes)
+    save_json(HEROES_FILE, heroes)
     return jsonify(new_hero)
 
 @app.route("/update", methods=["POST"])
@@ -46,14 +37,13 @@ def update():
     if not data:
         return jsonify(error="Invalid JSON"), 400
 
-    allowed_fields = {"name", "level", "power"}
-    heroes = load_heroes()
+    heroes = load_json(HEROES_FILE, [])
     for hero in heroes:
         if hero["id"] == data.get("id"):
-            if data["field"] in allowed_fields:
+            if data["field"] in {"name", "level", "power"}:
                 hero[data["field"]] = data["value"]
 
-    save_heroes(heroes)
+    save_json(HEROES_FILE, heroes)
     return jsonify(success=True)
 
 @app.route("/delete", methods=["POST"])
@@ -62,27 +52,20 @@ def delete():
     if not data:
         return jsonify(error="Invalid JSON"), 400
 
-    heroes = load_heroes()
+    heroes = load_json(HEROES_FILE, [])
     updated = [h for h in heroes if h["id"] != data.get("id")]
-    save_heroes(updated)
+    save_json(HEROES_FILE, updated)
     return jsonify(success=True)
 
-# ---------- Game Progression ----------
-def load_progression():
-    default = {
+# ---------- Progression ----------
+@app.route("/progression")
+def get_progression():
+    return jsonify(load_json(PROGRESSION_FILE, {
         "wins": 0,
         "losses": 0,
         "stages_cleared": 0,
         "achievements": []
-    }
-    return load_json(PROGRESSION_FILE, default)
-
-def save_progression(progression):
-    save_json(PROGRESSION_FILE, progression)
-
-@app.route("/progression")
-def get_progression():
-    return jsonify(load_progression())
+    }))
 
 @app.route("/progression/update", methods=["POST"])
 def update_progression():
@@ -90,13 +73,18 @@ def update_progression():
     if not data:
         return jsonify(error="Invalid JSON"), 400
 
-    progression = load_progression()
+    progression = load_json(PROGRESSION_FILE, {
+        "wins": 0,
+        "losses": 0,
+        "stages_cleared": 0,
+        "achievements": []
+    })
 
     for key in ["wins", "losses", "stages_cleared", "achievements"]:
         if key in data:
             progression[key] = data[key]
 
-    save_progression(progression)
+    save_json(PROGRESSION_FILE, progression)
     return jsonify(success=True)
 
 @app.route("/progression/reset", methods=["POST"])
@@ -107,16 +95,15 @@ def reset_progression():
         "stages_cleared": 0,
         "achievements": []
     }
-    save_progression(progression)
+    save_json(PROGRESSION_FILE, progression)
     return jsonify(success=True, progression=progression)
 
 # ---------- Frontend ----------
 @app.route("/")
-def index():
+def home():
+    # 👇 This loads your templates/index.html
     return render_template("index.html")
 
-# ---------- Run (Render-ready) ----------
+# ---------- Main ----------
 if __name__ == "__main__":
-    # Render (and many PaaS) provide PORT via environment variable
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
+    app.run(debug=True)

@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Flask Site</title>
+    <meta charset="UTF-8">
+    <title>My Site - Card Layout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>🚀 Welcome to My Flask Site!</h1>
-    <p>If you can see this, Flask is serving HTML correctly.</p>
+
+    <!-- Hero Section with Image -->
+    <div class="hero">
+        <img src="{{ url_for('static', filename='topimage.jpg') }}" alt="Site Banner">
+        <div class="hero-text">
+            <h1 style="font-size:120px;">God Forge</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Featured Cards</h2>
+
+        <div class="card-grid">
+
+            <!-- Card 1 -->
+            <div class="card">
+                <h3>Help Links</h3>
+                <p>
+                    <a href="https://www.ravenpyros.com" target="_blank">
+                        https://www.ravenpyros.com
+                    </a>
+                                      <a href="https://hellhades.com/godforge/news/the-ultimate-beginner-guide-to-godforge-alpha-caverns/" target="_blank">
+                        https://hellhades.com
+                    </a>
+                </p>
+                <button onclick="alert('Card 1 clicked!')">Learn More</button>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <h3>Card Two</h3>
+                <p>This is another card. Cards automatically wrap to the next row.</p>
+                <button onclick="alert('Card 2 clicked!')">Learn More</button>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <h3>Card Three</h3>
+                <p>Add as many cards as you like! The grid adjusts automatically.</p>
+                <button onclick="alert('Card 3 clicked!')">Learn More</button>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 </html>
