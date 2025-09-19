@@ -3,8 +3,8 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-    background: #02264b;
-    color: #333;
+    background: #7e08b4; /* COLOR: page background (purple) */
+    color: #0e0d0d; /* COLOR: default text color */
 }
 
 /* ---------- Hero Section ---------- */
@@ -26,9 +26,9 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: rgb(232, 241, 100); /* COLOR: hero text */
     text-align: center;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6); /* COLOR: shadow under hero text */
 }
 
 .hero-text h1 {
@@ -38,9 +38,9 @@ body {
 
 /* ---------- Navbar (optional if you keep it) ---------- */
 .navbar {
-    background: #2c3e50;
+    background: #70e076; /* COLOR: navbar background */
     padding: 16px;
-    color: white;
+    color: rgb(173, 101, 187); /* COLOR: navbar text */
     text-align: center;
 }
 
@@ -54,7 +54,7 @@ body {
     max-width: 1000px;
     margin: 40px auto;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.05); /* subtle overlay */
+    background: rgba(19, 122, 33, 0.05); /* COLOR: container background (very light transparent white overlay) */
     border-radius: 8px;
 }
 
@@ -67,31 +67,31 @@ body {
 
 /* ---------- Individual Card ---------- */
 .card {
-    background: white;
+    background: rgb(241, 220, 29); /* COLOR: card background*/
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* COLOR: shadow under card */
     padding: 20px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* COLOR: stronger shadow when hovering */
 }
 
 .card h3 {
     margin-top: 0;
-    color: #2c3e50;
+    color: #000000; /* COLOR: card title text */
 }
 
 .card p {
-    color: #555;
+    color: #000000; /* COLOR: card description text */
 }
 
 /* ---------- Buttons ---------- */
 button {
-    background: #3498db;
-    color: white;
+    background: #030303; /* COLOR: button background (blue) */
+    color: rgb(255, 255, 255); /* COLOR: button text (red) */
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -101,5 +101,5 @@ button {
 }
 
 button:hover {
-    background: #2980b9;
+    background: #2980b9; /* COLOR: button background on hover (darker blue) */
 }
