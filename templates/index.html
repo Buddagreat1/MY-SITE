@@ -13,44 +13,87 @@
         <div class="hero-text">
             <h1 style="font-size:120px;">God Forge</h1>
         </div>
+    </div> <!-- ✅ closed hero properly -->
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <div class="tab active" data-tab="heroes">Heroes</div>
+        <div class="tab" data-tab="progression">Progression</div>
+        <div class="tab" data-tab="settings">Settings</div>
     </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <h2>Featured Cards</h2>
+    <!-- Tab Content -->
+    <div id="heroes" class="tab-content active">
+        <h2>Heroes</h2>
+        <p>This is where your heroes info goes.</p>
 
-        <div class="card-grid">
+        <!-- Main Content inside Heroes tab -->
+        <div class="container">
+            <h2>Featured Cards</h2>
 
-            <!-- Card 1 -->
-            <div class="card">
-                <h3>Help Links</h3>
-                <p>
-                    <a href="https://www.ravenpyros.com" target="_blank">
-                        https://www.ravenpyros.com
-                    </a>
-                                      <a href="https://hellhades.com/godforge/news/the-ultimate-beginner-guide-to-godforge-alpha-caverns/" target="_blank">
-                        https://hellhades.com
-                    </a>
-                </p>
-                <button onclick="alert('Card 1 clicked!')">Learn More</button>
+            <div class="card-grid">
+
+                <!-- Card 1 -->
+                <div class="card">
+                    <h3>Help Links</h3>
+                    <p>
+                        <a href="https://www.ravenpyros.com" target="_blank">
+                            https://www.ravenpyros.com
+                        </a><br>
+                        <a href="https://hellhades.com/godforge/news/the-ultimate-beginner-guide-to-godforge-alpha-caverns/" target="_blank">
+                            https://hellhades.com
+                        </a>
+                    </p>
+                    <button onclick="alert('Card 1 clicked!')">Learn More</button>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card">
+                    <h3>Card Two</h3>
+                    <p>This is another card. Cards automatically wrap to the next row.</p>
+                    <button onclick="alert('Card 2 clicked!')">Learn More</button>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card">
+                    <h3>Card Three</h3>
+                    <p>Add as many cards as you like! The grid adjusts automatically.</p>
+                    <button onclick="alert('Card 3 clicked!')">Learn More</button>
+                </div>
+
             </div>
-
-            <!-- Card 2 -->
-            <div class="card">
-                <h3>Card Two</h3>
-                <p>This is another card. Cards automatically wrap to the next row.</p>
-                <button onclick="alert('Card 2 clicked!')">Learn More</button>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="card">
-                <h3>Card Three</h3>
-                <p>Add as many cards as you like! The grid adjusts automatically.</p>
-                <button onclick="alert('Card 3 clicked!')">Learn More</button>
-            </div>
-
         </div>
     </div>
+
+    <div id="progression" class="tab-content">
+        <h2>Progression</h2>
+        <p>This is where your progression stats go.</p>
+    </div>
+
+    <div id="settings" class="tab-content">
+        <h2>Settings</h2>
+        <p>Game settings and options here.</p>
+    </div>
+
+    <!-- Tab Script -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const tabs = document.querySelectorAll(".tab");
+        const contents = document.querySelectorAll(".tab-content");
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                // remove active classes
+                tabs.forEach(t => t.classList.remove("active"));
+                contents.forEach(c => c.classList.remove("active"));
+
+                // add active class to clicked tab and matching content
+                tab.classList.add("active");
+                document.getElementById(tab.dataset.tab).classList.add("active");
+            });
+        });
+    });
+    </script>
 
 </body>
 </html>

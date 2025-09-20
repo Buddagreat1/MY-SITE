@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-import json, os, uuid
+import json, os, uuid, socket
 
 app = Flask(__name__)
 
@@ -101,9 +101,20 @@ def reset_progression():
 # ---------- Frontend ----------
 @app.route("/")
 def home():
-    # 👇 This loads your templates/index.html
     return render_template("index.html")
+
+# ---------- Port Finder ----------
+def find_free_port(start_port=5000, max_port=5100):
+    port = start_port
+    while port <= max_port:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            if s.connect_ex(("127.0.0.1", port)) != 0:
+                return port
+        port += 1
+    raise RuntimeError("No free ports available in range 5000–5100")
 
 # ---------- Main ----------
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = find_free_port()
+    print(f"✅ Starting Flask on port {port}")
+    app.run(debug=True, port=port)

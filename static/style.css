@@ -1,6 +1,14 @@
+/* ---------- Custom Font ---------- */
+@font-face {
+    font-family: "FacetsNF";
+    src: url("/static/fonts/FacetsNF.ttf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* ---------- Global Styles ---------- */
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Helvetica, sans-serif; /* Normal font for most text */
     margin: 0;
     padding: 0;
     background: #7e08b4; /* COLOR: page background (purple) */
@@ -26,7 +34,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: rgb(232, 241, 100); /* COLOR: hero text */
+    color: #FFD700; /* COLOR: hero text */
     text-align: center;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.6); /* COLOR: shadow under hero text */
 }
@@ -34,6 +42,7 @@ body {
 .hero-text h1 {
     margin: 0;
     font-size: 60px;
+    font-family: "FacetsNF", Helvetica, sans-serif;
 }
 
 /* ---------- Navbar (optional if you keep it) ---------- */
@@ -58,6 +67,50 @@ body {
     border-radius: 8px;
 }
 
+/* ---------- Tabs ---------- */
+.tabs {
+    display: flex;
+    justify-content: center;
+    background: #5c0a87; /* COLOR: tabs background (slightly darker purple than body) */
+    border-bottom: 2px solid #FFD700; /* COLOR: gold underline for separation */
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 14px 20px;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: Helvetica, sans-serif; /* keep regular font */
+    background: transparent;
+    color: #ffffff; /* COLOR: tab text */
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.tab:hover {
+    background: rgba(255, 215, 0, 0.2); /* COLOR: gold hover effect */
+    color: #FFD700; /* highlight text */
+}
+
+.tab.active {
+    background: #FFD700; /* COLOR: active tab background */
+    color: #000000; /* COLOR: active tab text */
+    font-weight: bold;
+}
+
+/* ---------- Tab Content ---------- */
+.tab-content {
+    display: none; /* hidden by default */
+    padding: 20px;
+}
+
+.tab-content.active {
+    display: block; /* only active section shows */
+}
+
+
+
+
 /* ---------- Card Grid ---------- */
 .card-grid {
     display: grid;
@@ -67,7 +120,7 @@ body {
 
 /* ---------- Individual Card ---------- */
 .card {
-    background: rgb(241, 220, 29); /* COLOR: card background*/
+    background: #FFD700; /* COLOR: card background*/
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* COLOR: shadow under card */
     padding: 20px;
@@ -90,8 +143,8 @@ body {
 
 /* ---------- Buttons ---------- */
 button {
-    background: #030303; /* COLOR: button background (blue) */
-    color: rgb(255, 255, 255); /* COLOR: button text (red) */
+    background: #030303; /* COLOR: button background */
+    color: rgb(255, 255, 255); /* COLOR: button text */
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -101,5 +154,5 @@ button {
 }
 
 button:hover {
-    background: #2980b9; /* COLOR: button background on hover (darker blue) */
+    background: #2980b9; /* COLOR: button background on hover */
 }
